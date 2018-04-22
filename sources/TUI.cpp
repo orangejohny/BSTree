@@ -37,8 +37,7 @@ auto TUI::change_color(int c) -> void {
 
 
 auto TUI::show_menu() -> void {
-    change_color(DEFAULT);
-    std::cout << "Выберите одну из операций:\n";
+    print_ln("Выберите одну из операций:");
     change_color(CYAN);
     std::cout 
     << "1. Вывести дерево на экран\n"
@@ -58,6 +57,19 @@ auto TUI::show_menu() -> void {
     << "8. Завершить работу программы\n";
 }
 
+auto TUI::sub_menu() -> void {
+    print_ln("Выберите порядок обхода:");
+    change_color(GRAY);
+    std::cout
+    << "\ta. Прямой обход\n"
+    << "\tb. Поперечный обход\n"
+    << "\tc. Обратный обход\n";
+}
+
+auto TUI::get_char(std::istream& in) -> char {
+    change_color(GREEN);
+    return in.get();
+}
 
 auto TUI::print_error(const std::string& text) -> void {
     change_color(RED);
@@ -110,6 +122,8 @@ auto TUI::input(std::istream& inp) -> int {
         change_color(GREEN);
     }
 
+    inp.get();
+
     return c;
 }
 
@@ -141,7 +155,6 @@ auto TUI::str_input(std::istream& inp) -> std::string {
 auto TUI::is_exit() -> int {
     std::string ex;
     print_f("Вы хотите выйти из программы? (y/N) ");
-    std::cin.get();
     ex = str_input(std::cin);
 
     if (ex == "y" || ex == "yes" || ex == "Y" || ex == "Yes" || ex == "YES") {

@@ -11,6 +11,8 @@ namespace TUI {
 enum { DEFAULT, BLUE, GREEN, RED, CYAN, GRAY };
 auto change_color(int) -> void;
 auto show_menu() -> void;
+auto sub_menu() -> void;
+auto get_char(std::istream&) -> char;
 auto print_error(const std::string&) -> void;
 auto print_f(const std::string&) -> bool;
 auto print_ln(const std::string&) -> bool;

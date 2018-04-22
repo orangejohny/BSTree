@@ -50,13 +50,23 @@ public:
     bool load(const std::string& path);
     bool find(int val);
     int print_tree();
-    /*auto print_nodes(order ord) {
+    int print_nodes(order ord) {
+        if (root == nullptr) {
+            return -1;
+        }
         switch (ord) {
-        case order::direct:  //проверка на пустоту - node, data - left - right(рекурсия)
+        case order::direct:
+            direct_order(root);
+            break;
         case order::symmetric:
+            symmetric_order(root);
+            break;
         case order::reverse:
+            reverse_order(root);
         };
-    }*/
+
+        return 0;
+    }
     ~Tree() {
         clean(root);
     };
