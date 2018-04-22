@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 
 namespace TUI {
@@ -16,7 +17,7 @@ auto print_ln(const std::string&) -> bool;
 auto print_confirm(const std::string&) -> void;
 auto input(std::istringstream&) -> int;
 auto input(std::istream&) -> int;
-auto init_input(int&, char**) -> int*;
+auto init_input(int&, char**) -> std::vector<int>;
 auto str_input(std::istream&) -> std::string;
 auto is_exit() -> int;
 auto user_exit() -> void;

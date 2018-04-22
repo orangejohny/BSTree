@@ -114,16 +114,15 @@ auto TUI::input(std::istream& inp) -> int {
 }
 
 
-auto TUI::init_input(int& count, char** argv) -> int* {
+auto TUI::init_input(int& count, char** argv) -> std::vector<int> {
     if (count == 1) {
         count--;
-        return nullptr;
+        return std::vector<int>{};
     }
     
-    int* values = new int[count] ;
-
+    std::vector<int> values;
     for (int i = 1; i < count; i++) {
-        values[i-1] = stoi(std::string(*(argv + i)));
+        values.push_back(stoi(std::string(*(argv + i))));
     }
     count--;
 
@@ -159,5 +158,4 @@ auto TUI::is_exit() -> int {
 
 auto TUI::user_exit() -> void {
     change_color(DEFAULT);
-    exit(0);
 }
