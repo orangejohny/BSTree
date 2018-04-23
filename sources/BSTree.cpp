@@ -1,5 +1,5 @@
 // source file for Tree class
-#include "BSTree.hpp"
+#include <BSTree.hpp>
 #include <iostream>
 
 using namespace BSTree;
@@ -83,8 +83,8 @@ void BSTree::Tree::symmetric_order(Node* node) {
 
 void BSTree::Tree::reverse_order(Node* node) {
     if (node != nullptr) {
-        symmetric_order(node->left);
-        symmetric_order(node->right);
+        reverse_order(node->left);
+        reverse_order(node->right);
         std::cout << node->key << " ";        
     }
 }

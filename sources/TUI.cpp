@@ -1,5 +1,5 @@
 // source file for TUI namespace
-#include "TUI.hpp"
+#include <TUI.hpp>
 
 auto TUI::change_color(int c) -> void {
     switch (c) {
