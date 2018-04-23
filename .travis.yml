@@ -1,0 +1,11 @@
+language: cpp
+
+script:
+- cmake -H./sources -Bbuild
+- cmake --build build
+addons:
+  apt:
+    sources:
+    packages:
+      - cmake
+      - cmake-data

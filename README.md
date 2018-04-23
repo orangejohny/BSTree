@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/orangejohny/BSTree.svg?branch=master)](https://travis-ci.org/orangejohny/BSTree)
 # Project BSTree
 
 ## UNIX-systems
