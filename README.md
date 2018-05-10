@@ -30,7 +30,7 @@ cd install/bin
 
 **Building of a project with examples:**
 
-Just use the option `-DBUILD_EXAMPLES=ON`
+Use the option `-DBUILD_EXAMPLES=ON`
 
 ```shell
 cmake -H./sources -Bbuild -DCMAKE_INSTALL_PREFIX=install -DBUILD_EXAMPLES=ON
@@ -39,14 +39,16 @@ cmake --build build --target install
 
 **To run examples:**
 
-*Two examples are available!*
+*Five examples are available!*
 
 ```shell
 cd build/bin
 ./example<number>
 ```
 
-**Building of a projects with tests:**
+**Building of a project with tests:**
+
+Use the option `-DBUILD_TESTS=ON`
 
 ```shell
 cmake -H./sources -Bbuild -DCMAKE_INSTALL_PREFIX=install -DBUILD_TESTS=ON
