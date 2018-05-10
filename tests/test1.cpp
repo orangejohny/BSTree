@@ -17,7 +17,9 @@ TEST_CASE("Testing orders output") {
 
     BSTree::Tree tree1{8, 10, 14, 13, 3, 1, 6, 4, 7};
 
-    std::fstream out("test2.txt", std::ios_base::out | std::ios_base::in);
+    //std::fstream out("test2.txt", std::ios_base::out | std::ios_base::in);
+    std::string buffer;
+    std::stringstream out(buffer);
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::direct, out) == 0);
     out << std::endl;
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::symmetric, out) == 0);
@@ -35,7 +37,7 @@ TEST_CASE("Testing orders output") {
     REQUIRE(result==symmetric);
     getline(out, result);
     REQUIRE(result==reverse);
-    out.close();
+    //out.close();
 }
 
 TEST_CASE("Testing insert") {
@@ -45,7 +47,9 @@ TEST_CASE("Testing insert") {
     tree1.insert(7);
 
     std::string direct = "1 3 4 6 7 8 10 13 14 ";
-    std::fstream out("test3.txt", std::ios_base::out | std::ios_base::in);
+    //std::fstream out("test3.txt", std::ios_base::out | std::ios_base::in);
+    std::string buffer;
+    std::stringstream out(buffer);
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::direct, out) == 0);
     //out.close();
 
@@ -54,5 +58,5 @@ TEST_CASE("Testing insert") {
     std::string result;
     getline(out, result);
     REQUIRE(result==direct);
-    out.close();    
+    //out.close();    
 }
