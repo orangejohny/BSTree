@@ -29,7 +29,7 @@ TEST_CASE("Testing orders output") {
     //out.close();
 
     //std::ifstream in("test2.txt", std::ios_base::in);
-    out.seekg(0);
+    //out.seekg(0);
     std::string result;
     getline(out, result);
     REQUIRE(result==direct);
@@ -54,7 +54,7 @@ TEST_CASE("Testing insert") {
     //out.close();
 
     //std::ifstream in("test3.txt", std::ios_base::in);
-    out.seekg(0);    
+    //out.seekg(0);    
     std::string result;
     getline(out, result);
     REQUIRE(result==direct);
