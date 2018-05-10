@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace BSTree {
 struct Node {
@@ -15,7 +16,7 @@ struct Node {
 class Tree {
 private:
     Node *root;
-    void clean(Node* node) {
+    auto clean(Node* node) -> void {
         //обратный обход для удаления
         if (node == nullptr) return;
         clean(node->left);
@@ -24,11 +25,11 @@ private:
         node = nullptr;
     };
     
-    Node* _insert(Node* node, int val);
-    void direct_order(Node* node);
-    void symmetric_order(Node* node);
-    void reverse_order(Node* node);
-    void my_order(Node* node, int lvl);
+    auto _insert(Node* node, int val) -> Node*;
+    auto direct_order(Node* node, std::ostream& out = std::cout) -> void;
+    auto symmetric_order(Node* node, std::ostream& out = std::cout) -> void;
+    auto reverse_order(Node* node, std::ostream& out = std::cout) -> void;
+    auto my_order(Node* node, int lvl) -> void;
 
 public:
     
@@ -43,26 +44,26 @@ public:
     Tree(std::vector<int> list);    
     Tree(const Tree &tree);						//конструктор копирования (при начальной инициализации)
     auto operator=(const Tree &tree) -> Tree &; //оператор присваивания
-    bool insert(int val);
-    bool exists(int val);
-    bool remove(int val);
-    bool save(const std::string& path);
-    bool load(const std::string& path);
-    bool find(int val);
-    int print_tree();
-    int print_nodes(order ord) {
+    auto insert(int val) -> bool;
+    auto exists(int val) -> bool;
+    auto remove(int val) -> bool;
+    auto save(const std::string& path) -> bool;
+    auto load(const std::string& path) -> bool;
+    auto find(int val) -> bool;
+    auto print_tree() -> int;
+    auto print_nodes(order ord, std::ostream& out = std::cout) -> int {
         if (root == nullptr) {
             return -1;
         }
         switch (ord) {
         case order::direct:
-            direct_order(root);
+            direct_order(root, out);
             break;
         case order::symmetric:
-            symmetric_order(root);
+            symmetric_order(root, out);
             break;
         case order::reverse:
-            reverse_order(root);
+            reverse_order(root, out);
         };
 
         return 0;

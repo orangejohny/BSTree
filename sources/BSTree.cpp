@@ -1,6 +1,5 @@
 // source file for Tree class
 #include <BSTree.hpp>
-#include <iostream>
 
 using namespace BSTree;
 
@@ -18,7 +17,7 @@ BSTree::Tree::Tree(std::vector<int> list) {
     }
 }
 
-bool BSTree::Tree::insert(int val) {
+auto BSTree::Tree::insert(int val) -> bool {
     Node* result =_insert(root, val);
     if (result == nullptr) {
         return false;
@@ -28,7 +27,7 @@ bool BSTree::Tree::insert(int val) {
     }
 }
 
-Node* BSTree::Tree::_insert(Node* node, int val) {
+auto BSTree::Tree::_insert(Node* node, int val) -> Node* {
     if (node == nullptr) {
         return new Node(val);
     } else if (val < node->key) {
@@ -40,7 +39,7 @@ Node* BSTree::Tree::_insert(Node* node, int val) {
     }
 }
 
-int BSTree::Tree::print_tree() {
+auto BSTree::Tree::print_tree() -> int {
     if (root == nullptr) {
         return -1;
     }
@@ -48,7 +47,7 @@ int BSTree::Tree::print_tree() {
     return 0;
 }
 
-void BSTree::Tree::my_order(Node* node, int lvl) {
+auto BSTree::Tree::my_order(Node* node, int lvl) -> void {
     if (node != nullptr) {
         my_order(node->right, lvl+1);
         for (int i = 0; i < lvl; i++) {
@@ -65,26 +64,26 @@ void BSTree::Tree::my_order(Node* node, int lvl) {
     }
 }
 
-void BSTree::Tree::direct_order(Node* node) {
+auto BSTree::Tree::direct_order(Node* node, std::ostream& out) -> void {
     if (node != nullptr) {
-        direct_order(node->left);
-        std::cout << node->key << " ";
-        direct_order(node->right);
+        direct_order(node->left, out);
+        out << node->key << " ";
+        direct_order(node->right, out);
     }
 }
 
-void BSTree::Tree::symmetric_order(Node* node) {
+auto BSTree::Tree::symmetric_order(Node* node, std::ostream& out) -> void {
     if (node != nullptr) {
-        std::cout << node->key << " ";
-        symmetric_order(node->left);
-        symmetric_order(node->right);
+        out << node->key << " ";
+        symmetric_order(node->left, out);
+        symmetric_order(node->right, out);
     }
 }
 
-void BSTree::Tree::reverse_order(Node* node) {
+auto BSTree::Tree::reverse_order(Node* node, std::ostream& out) -> void{
     if (node != nullptr) {
-        reverse_order(node->left);
-        reverse_order(node->right);
-        std::cout << node->key << " ";        
+        reverse_order(node->left, out);
+        reverse_order(node->right, out);
+        out << node->key << " ";        
     }
 }

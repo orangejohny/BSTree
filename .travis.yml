@@ -1,8 +1,9 @@
 language: cpp
 
 script:
-- cmake -H./sources -Bbuild
+- cmake -H./sources -Bbuild -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
 - cmake --build build
+- cmake --build build --target test -- ARGS=--verbose
 addons:
   apt:
     sources:
