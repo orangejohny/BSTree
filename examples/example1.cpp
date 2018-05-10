@@ -1,10 +1,10 @@
-// simple example that demonstrates creation of BSTree,
+// example that demonstrates creation of BSTree,
 // output using different colors, inserting elements
 
 
 #include <BSTree.hpp>
 #include <TUI.hpp>
-
+#include <iostream>
 int main() {
     BSTree::Tree tree{6, 8, 7, 9, 4, 1};
     TUI::print_confirm("BSTree of sequence 6 8 7 9 4 1 was created");

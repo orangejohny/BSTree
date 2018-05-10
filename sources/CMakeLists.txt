@@ -23,17 +23,22 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include/)
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} TUI Tree)
 
-#examples
+install(TARGETS TUI Tree ARCHIVE DESTINATION lib LIBRARY DESTINATION lib)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../include/ DESTINATION include)
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+
+# examples
 if(BUILD_EXAMPLES)
     file(GLOB EXAMPLE_SOURCES ${EXAMPLES_DIR}/*.cpp)
     foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
         get_filename_component(EXAMPLE_NAME ${EXAMPLE_SOURCE} NAME_WE)
         add_executable(${EXAMPLE_NAME} ${EXAMPLE_SOURCE})
         target_link_libraries(${EXAMPLE_NAME} TUI Tree)
+        install(TARGETS ${EXAMPLE_NAME} DESTINATION bin)
     endforeach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
 endif()
 
-#tests
+# tests
 if(BUILD_TESTS)
 	enable_testing()
 	add_executable(check ${TESTS_DIR}/main.cpp ${TESTS_DIR}/test1.cpp)

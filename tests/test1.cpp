@@ -17,7 +17,6 @@ TEST_CASE("Testing orders output") {
 
     BSTree::Tree tree1{8, 10, 14, 13, 3, 1, 6, 4, 7};
 
-    //std::fstream out("test2.txt", std::ios_base::out | std::ios_base::in);
     std::string buffer;
     std::stringstream out(buffer);
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::direct, out) == 0);
@@ -25,11 +24,8 @@ TEST_CASE("Testing orders output") {
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::symmetric, out) == 0);
     out << std::endl;    
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::reverse, out) == 0);
-    out << std::endl;    
-    //out.close();
+    out << std::endl;
 
-    //std::ifstream in("test2.txt", std::ios_base::in);
-    //out.seekg(0);
     std::string result;
     getline(out, result);
     REQUIRE(result==direct);
@@ -37,7 +33,6 @@ TEST_CASE("Testing orders output") {
     REQUIRE(result==symmetric);
     getline(out, result);
     REQUIRE(result==reverse);
-    //out.close();
 }
 
 TEST_CASE("Testing insert") {
@@ -47,16 +42,31 @@ TEST_CASE("Testing insert") {
     tree1.insert(7);
 
     std::string direct = "1 3 4 6 7 8 10 13 14 ";
-    //std::fstream out("test3.txt", std::ios_base::out | std::ios_base::in);
     std::string buffer;
     std::stringstream out(buffer);
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::direct, out) == 0);
-    //out.close();
-
-    //std::ifstream in("test3.txt", std::ios_base::in);
-    //out.seekg(0);    
+   
     std::string result;
     getline(out, result);
     REQUIRE(result==direct);
-    //out.close();    
+}
+
+TEST_CASE("Testing remove") {
+    BSTree::Tree tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    tree.remove(14);
+    tree.remove(1);
+
+    std::string expected = "3 4 6 7 8 10 13 ";
+    std::string buffer;
+    std::stringstream out(buffer);
+    REQUIRE(tree.print_nodes(BSTree::Tree::order::direct, out) == 0);
+    std::string result;
+    getline(out, result);
+    REQUIRE(result==expected);
+}
+
+TEST_CASE("Testing existing") {
+    BSTree::Tree tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    REQUIRE(tree.exists(6) == true);
+    REQUIRE(tree.exists(50) == false);
 }

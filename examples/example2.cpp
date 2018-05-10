@@ -19,4 +19,6 @@ int main() {
     TUI::print_ln("Reverse order:");
     tree.print_nodes(BSTree::Tree::order::reverse);
     TUI::print_ln(" ");    
+
+    TUI::user_exit();    
 }

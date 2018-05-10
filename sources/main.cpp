@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
                 TUI::print_error("Дерево пусто!");
             }
             break;
+
         case 2:
             TUI::sub_menu();
             switch (TUI::get_char(std::cin)) {
@@ -52,6 +53,45 @@ int main(int argc, char* argv[]) {
                 TUI::print_ln(" ");
             }
             break;
+
+        case 3:
+            TUI::print_f("Введите значение для нового узла: ");
+            if (!tree.insert(TUI::input(std::cin))) {
+                TUI::print_error("Узел уже существует в дереве!");
+            }
+            break;
+
+        case 4:
+            TUI::print_f("Введите значение узла: ");
+            if (!tree.remove(TUI::input(std::cin))) {
+                TUI::print_error("Узел отсутствует!");
+            } else {
+                TUI::print_confirm("Узел был успешно удалён!");
+            }
+            break;
+
+        case 5:
+            TUI::print_f("Введите путь к файлу: ");
+            tree.save(TUI::str_input(std::cin));
+            break;
+
+        case 6:
+            TUI::print_f("Введите путь к файлу: ");
+            if (!tree.load(TUI::str_input(std::cin))) {
+                TUI::print_error("Ошибка записи из файла!");
+            } else {
+                TUI::print_confirm("Дерево было успешно загружено!");
+            }
+            break;
+
+        case 7:
+            TUI::print_f("Введите значение узла: ");
+            if (!tree.exists(TUI::input(std::cin))) {
+                TUI::print_error("Элемент не найден!");
+            } else {
+                TUI::print_confirm("Элемент найден!");
+            }
+
         case 8:
             if (TUI::is_exit() == 1) {
                 exit = true;
