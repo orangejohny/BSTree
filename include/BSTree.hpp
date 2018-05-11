@@ -74,6 +74,7 @@ public:
 
         return 0;
     }
+
     ~Tree() {
         clean(root);
     }

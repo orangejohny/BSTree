@@ -26,10 +26,10 @@ BSTree::Tree::Tree(const Tree &tree) {
     std::stringstream out(buffer);
     direct_order(tree.root, out);
 
-    std::string ch;
+    int ch;
     while(out) {
         out >> ch;
-        insert(std::stoi(ch));
+        insert(ch);
     }
 }
 
@@ -85,8 +85,8 @@ auto BSTree::Tree::my_order(Node* node, int lvl) const -> void {
 // Private function that prints nodes in direct order
 auto BSTree::Tree::direct_order(Node* node, std::ostream& out) const -> void {
     if (node != nullptr) {
-        direct_order(node->left, out);
         out << node->key << " ";
+        direct_order(node->left, out);
         direct_order(node->right, out);
     }
 }
@@ -94,8 +94,8 @@ auto BSTree::Tree::direct_order(Node* node, std::ostream& out) const -> void {
 // Private function that prints nodes in symmetric order
 auto BSTree::Tree::symmetric_order(Node* node, std::ostream& out) const -> void {
     if (node != nullptr) {
-        out << node->key << " ";
         symmetric_order(node->left, out);
+        out << node->key << " ";
         symmetric_order(node->right, out);
     }
 }
@@ -180,22 +180,20 @@ auto BSTree::Tree::load(const std::string& path) -> bool {
     }
 
     Tree tmp;
-    swap(tmp);
 
-    std::string ch;
+    int ch;
     while(fin) {
         fin >> ch;
-        insert(std::stoi(ch));
+        tmp.insert(ch);
     }
 
-    fin.close();
+    swap(tmp);
     return true;
 }
 
 // Overloading of =
 auto BSTree::Tree::operator=(const Tree &tree)-> void {
-    Tree tmp{tree};
-    swap(tmp);
+    Tree{tree}.swap(*this);
 }
 
 // Check if node is in tree

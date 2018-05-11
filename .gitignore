@@ -1,6 +1,7 @@
 *build*/
 *install*/
 tree*.txt
+text.txt
 
 # Prerequisites
 *.d
