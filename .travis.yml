@@ -3,7 +3,7 @@ language: cpp
 script:
 - cmake -H./sources -Bbuild -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=install
 - cmake --build build --target install
-#- cmake --build build --target test -- ARGS=--verbose 
+- cmake --build build --target test -- ARGS=--verbose 
 addons:
   apt:
     sources:
