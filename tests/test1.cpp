@@ -11,8 +11,8 @@ TEST_CASE("Creating binary search tree") {
 }
 
 TEST_CASE("Testing orders output") {
-    std::string direct = "1 3 4 6 7 8 10 13 14 ";
-    std::string symmetric = "8 3 1 6 4 7 10 14 13 ";
+    std::string direct = "8 3 1 6 4 7 10 14 13 ";
+    std::string symmetric = "1 3 4 6 7 8 10 13 14 ";
     std::string reverse = "1 4 7 6 3 13 14 10 8 ";
 
     BSTree::Tree tree1{8, 10, 14, 13, 3, 1, 6, 4, 7};
@@ -41,7 +41,7 @@ TEST_CASE("Testing insert") {
     tree1.insert(4);
     tree1.insert(7);
 
-    std::string direct = "1 3 4 6 7 8 10 13 14 ";
+    std::string direct = "8 3 1 6 4 7 10 14 13 ";
     std::string buffer;
     std::stringstream out(buffer);
     REQUIRE(tree1.print_nodes(BSTree::Tree::order::direct, out) == 0);
@@ -56,7 +56,7 @@ TEST_CASE("Testing remove") {
     tree.remove(14);
     tree.remove(1);
 
-    std::string expected = "3 4 6 7 8 10 13 ";
+    std::string expected = "8 3 6 4 7 10 13 ";
     std::string buffer;
     std::stringstream out(buffer);
     REQUIRE(tree.print_nodes(BSTree::Tree::order::direct, out) == 0);
