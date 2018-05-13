@@ -21,8 +21,9 @@ TEST_CASE("MY_BENCH") {
         for (int i = 0; i < pow(10, expo); i++) {
             t = clock();
             value = rand();
-            tree.insert(value);
-            t = clock() - t;
+            if (tree.insert(value)) {
+                t = clock() - t;
+            }
         }
 
         out << "```java\nINSERT for 10^" << expo << " elements takes " << ((double)t)/CLOCKS_PER_SEC << " seconds" << std::endl;
