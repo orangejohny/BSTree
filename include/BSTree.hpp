@@ -26,7 +26,7 @@ private:
         node = nullptr;
     };
     
-    auto _insert(Node* node, int val, bool&) -> Node*;
+    auto _insert(Node* node, int val, bool&) -> void;
     auto direct_order(Node* node, std::ostream& out = std::cout) const -> void;
     auto symmetric_order(Node* node, std::ostream& out = std::cout) const -> void;
     auto reverse_order(Node* node, std::ostream& out = std::cout) const -> void;
@@ -73,6 +73,22 @@ public:
         };
 
         return 0;
+    }
+
+    // Overloading of <<
+    friend auto operator<<(std::ostream& stream, const Tree& tree) -> std::ostream& {
+        tree.print_nodes(Tree::order::direct, stream);
+        return stream;
+    }
+
+    // Overloading of >>
+    friend auto operator>>(std::istream& stream, Tree& tree) -> std::istream& {
+        int ch;
+        while(stream) {
+            stream >> ch;
+            tree.insert(ch);
+        }
+        return stream;
     }
 
     ~Tree() {

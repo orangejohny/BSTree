@@ -24,34 +24,38 @@ BSTree::Tree::Tree(const Tree &tree) {
 
     std::string buffer;
     std::stringstream out(buffer);
-    direct_order(tree.root, out);
-
-    int ch;
-    while(out) {
-        out >> ch;
-        insert(ch);
-    }
+    out << tree;
+    out >> *this;
 }
 
 // Public function for inserting elements
 auto BSTree::Tree::insert(int val) -> bool {
-    bool is_inserted = true;    
-    Node* result =_insert(root, val, is_inserted);
-    root = result;
-    return is_inserted;
+    if (root == nullptr) {
+        root = new Node(val);
+        return true;
+    } else {
+        bool is_inserted = false;        
+        _insert(root, val, is_inserted);
+        return is_inserted;
+    }
 }
 
 // Private utility function for inserting elements
-auto BSTree::Tree::_insert(Node* node, int val, bool& is_inserted) -> Node* {
-    if (node == nullptr) {
-        return new Node(val);
-    } else if (val < node->key) {
-        node->left = _insert(node->left, val, is_inserted);
+auto BSTree::Tree::_insert(Node* node, int val, bool& is_inserted) -> void {
+    if (val < node->key) {
+        if (node->left == nullptr) {
+            node->left = new Node(val);
+            is_inserted = true;
+        } else {
+            _insert(node->left, val, is_inserted);  
+        }
     } else if (val > node->key) {
-        node->right = _insert(node->right, val, is_inserted);
-    } else {
-        is_inserted=false;
-        return node;
+        if (node->right == nullptr) {
+            node->right = new Node(val);
+            is_inserted = true;
+        } else {
+            _insert(node->right, val, is_inserted);  
+        }
     }
 }
 
@@ -154,7 +158,7 @@ auto BSTree::Tree::save(const std::string& path) const -> bool {
     std::ifstream fin(path);
     if (!fin.is_open()) {
         std::ofstream fout(path);
-        direct_order(root, fout);
+        fout << *this;
         fout.close();
         return true;
     } else {
@@ -163,7 +167,7 @@ auto BSTree::Tree::save(const std::string& path) const -> bool {
         std::cin >> answer;
         if (answer == "Да" || answer == "ДА" || answer == "да") {
             std::ofstream fout(path);
-            direct_order(root, fout);
+            fout << *this;
             fout.close();
             return true;
         } else {
@@ -181,11 +185,7 @@ auto BSTree::Tree::load(const std::string& path) -> bool {
 
     Tree tmp;
 
-    int ch;
-    while(fin) {
-        fin >> ch;
-        tmp.insert(ch);
-    }
+    fin >> tmp;
 
     swap(tmp);
     return true;

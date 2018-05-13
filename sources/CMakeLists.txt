@@ -24,9 +24,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include/)
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} TUI Tree)
 
-install(TARGETS TUI Tree ARCHIVE DESTINATION lib LIBRARY DESTINATION lib)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../include/ DESTINATION include)
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+#install(EXPORT Tree-config DESTINATION cmake)
+#install(EXPORT TUI-config DESTINATION cmake)
+#install(TARGETS TUI Tree EXPORT TUI-config Tree-config ARCHIVE DESTINATION lib LIBRARY DESTINATION lib)
+install(TARGETS TUI Tree ARCHIVE DESTINATION lib LIBRARY DESTINATION lib)
+
 
 # examples
 if(BUILD_EXAMPLES)
@@ -41,8 +45,9 @@ endif()
 
 # tests
 if(BUILD_TESTS)
-	enable_testing()
-	add_executable(check ${TESTS_DIR}/main.cpp ${TESTS_DIR}/test1.cpp)
-	target_link_libraries(check TUI Tree)
-	add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
+    enable_testing()
+    file(GLOB TEST_SOURCES ${TESTS_DIR}/*.cpp)
+    add_executable(check ${TEST_SOURCES})
+    target_link_libraries(check TUI Tree ${DEPENDS_LIBRARIES})
+    add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
 endif()
