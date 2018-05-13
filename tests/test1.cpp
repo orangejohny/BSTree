@@ -70,3 +70,28 @@ TEST_CASE("Testing existing") {
     REQUIRE(tree.exists(6) == true);
     REQUIRE(tree.exists(50) == false);
 }
+
+TEST_CASE("Testing input/output from file") {
+    std::ofstream out("testInput.txt", std::ios::in);
+    out << "Да";
+    out.close();
+    freopen("testInput.txt", "r", stdin);
+
+    BSTree::Tree tree1{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    tree1.save("tree1.txt");
+
+    BSTree::Tree tree2;
+    tree2.load("tree1.txt");
+
+    std::string buffer;
+    std::stringstream str(buffer);
+    str << tree1;
+    str << std::endl;
+    str << tree2;
+
+    std::string result1, result2;
+    getline(str, result1);
+    getline(str, result2);
+
+    REQUIRE(result1 == result2);
+}

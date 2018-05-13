@@ -10,11 +10,13 @@ endif()
 
 option(BUILD_EXAMPLES "Build examples" OFF)
 option(BUILD_TESTS "Build tests " OFF)
+option(BUILD_BENCHS "Build benchmarks" OFF)
 
 project(BSTree)
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 set(EXAMPLES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../examples)
 set(TESTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../tests)
+set(BENCHS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../bench)
 
 add_library(TUI STATIC ${CMAKE_CURRENT_SOURCE_DIR}/TUI.cpp)
 add_library(Tree STATIC ${CMAKE_CURRENT_SOURCE_DIR}/BSTree.cpp)
@@ -50,4 +52,13 @@ if(BUILD_TESTS)
     add_executable(check ${TEST_SOURCES})
     target_link_libraries(check TUI Tree ${DEPENDS_LIBRARIES})
     add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
+endif()
+
+# benchmark
+if(BUILD_BENCHS)
+    enable_testing()
+    file(GLOB BENCH_SOURCES ${BENCHS_DIR}/*.cpp)
+    add_executable(bench ${BENCH_SOURCES})
+    target_link_libraries(bench TUI Tree ${DEPENDS_LIBRARIES})
+    add_test(NAME bench COMMAND bench "-s" "-r" "compact" "--use-colour" "yes" "--durations" "yes") 
 endif()

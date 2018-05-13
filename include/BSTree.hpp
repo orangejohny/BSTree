@@ -81,11 +81,14 @@ public:
         return stream;
     }
 
-    // Overloading of >>
+    // Overloading of >>. Adds to tree elements from one line
     friend auto operator>>(std::istream& stream, Tree& tree) -> std::istream& {
+        std::string buffer;
+        getline(stream, buffer);
+        std::istringstream in(buffer);
         int ch;
-        while(stream) {
-            stream >> ch;
+        while(in) {
+            in >> ch;
             tree.insert(ch);
         }
         return stream;

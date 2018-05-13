@@ -2,6 +2,7 @@
 *install*/
 tree*.txt
 text.txt
+out*.txt
 
 # Prerequisites
 *.d
