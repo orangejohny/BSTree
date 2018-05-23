@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     setlocale(LC_ALL, "RUS");
 
     std::vector<int> values = TUI::init_input(argc, argv);
-    Tree tree(values);
+    Tree<int> tree(values);
 
     bool exit = false;
     int empty;
@@ -32,15 +32,15 @@ int main(int argc, char* argv[]) {
             switch (TUI::get_char(std::cin)) {
             case 'a':
                 TUI::change_color(TUI::GRAY);
-                empty = tree.print_nodes(Tree::order::direct);
+                empty = tree.print_nodes(Tree<int>::order::direct);
                 break;
             case 'b':
                 TUI::change_color(TUI::GRAY);
-                empty = tree.print_nodes(Tree::order::symmetric);
+                empty = tree.print_nodes(Tree<int>::order::symmetric);
                 break;
             case 'c':
                 TUI::change_color(TUI::GRAY);                
-                empty = tree.print_nodes(Tree::order::reverse);
+                empty = tree.print_nodes(Tree<int>::order::reverse);
                 break;
             default:
                 TUI::print_error("Нет такой команды!");

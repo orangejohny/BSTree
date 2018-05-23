@@ -4,7 +4,7 @@
 #include <BSTree.hpp>
 
 int main() {
-    BSTree::Tree tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    BSTree::Tree<int> tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
     TUI::print_confirm("BSTree of sequence 8 10 14 13 3 1 6 4 7 was created");
 
     if (tree.exists(14)) {

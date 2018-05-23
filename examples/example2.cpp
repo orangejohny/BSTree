@@ -5,19 +5,19 @@
 #include <TUI.hpp>
 
 int main() {
-    BSTree::Tree tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    BSTree::Tree<int> tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
     TUI::print_confirm("BSTree of sequence 8 10 14 13 3 1 6 4 7 was created");
 
     TUI::print_ln("Direct order:");
-    tree.print_nodes(BSTree::Tree::order::direct);
+    tree.print_nodes(BSTree::Tree<int>::order::direct);
     TUI::print_ln(" ");
 
     TUI::print_ln("Symmetric order:");
-    tree.print_nodes(BSTree::Tree::order::symmetric);
+    tree.print_nodes(BSTree::Tree<int>::order::symmetric);
     TUI::print_ln(" ");    
 
     TUI::print_ln("Reverse order:");
-    tree.print_nodes(BSTree::Tree::order::reverse);
+    tree.print_nodes(BSTree::Tree<int>::order::reverse);
     TUI::print_ln(" ");    
 
     TUI::user_exit();    
