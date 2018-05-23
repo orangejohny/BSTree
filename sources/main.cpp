@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
         choice = TUI::input(std::cin);
         switch (choice) {
         case 1:
-            if (empty = tree.print_tree() == -1) {
+            if ((empty = tree.print_tree()) == -1) {
                 TUI::print_error("Дерево пусто!");
             }
             break;
