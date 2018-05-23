@@ -7,13 +7,17 @@
 #include <sstream>
 
 namespace BSTree {
+
+
+
 template<typename type>
 struct Node {
     type key;
     Node<type> *left;
     Node<type> *right;
-    Node<type>(type val) : key{val}, left{nullptr}, right{nullptr} {};
-    Node<type>(Node<type> *origin) : key{origin->key}, left{origin->left}, right{origin->right} {};
+    Node<type> *parent;
+    Node(type val) : key{val}, left{nullptr}, right{nullptr}, parent{nullptr} {};
+    Node(Node<type> *origin) : key{origin->key}, left{origin->left}, right{origin->right} {};
 };
 
 template<typename type>
@@ -30,6 +34,7 @@ private:
     
     auto _insert(Node<type>* node, type val, bool&) -> void;
     auto direct_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
+    auto _direct_order(Node<type>* node) const -> void;
     auto symmetric_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
     auto reverse_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
     auto my_order(Node<type>* node, int lvl) const -> void;
@@ -99,6 +104,14 @@ public:
     ~Tree() {
         clean(root);
     }
+
+    typedef OwnIterator<type> iterator;
+    iterator begin() {
+        return iterator(root);
+    }
+    iterator end() {
+
+    }
 };
 }
 
@@ -151,6 +164,7 @@ auto BSTree::Tree<type>::_insert(Node<type>* node, type val, bool& is_inserted) 
     if (val < node->key) {
         if (node->left == nullptr) {
             node->left = new Node<type>(val);
+            node->left->parent = node;
             is_inserted = true;
         } else {
             _insert(node->left, val, is_inserted);  
@@ -158,6 +172,7 @@ auto BSTree::Tree<type>::_insert(Node<type>* node, type val, bool& is_inserted) 
     } else if (val > node->key) {
         if (node->right == nullptr) {
             node->right = new Node<type>(val);
+            node->right->parent = node;
             is_inserted = true;
         } else {
             _insert(node->right, val, is_inserted);  
@@ -241,12 +256,15 @@ auto BSTree::Tree<type>::_remove(Node<type>* node, type val, bool& is_deleted) -
 
     if (val < node->key) {
         node->left = _remove(node->left, val, is_deleted);
+        node->left->parent = node;
     } else if (val > node->key) {
         node->right = _remove(node->right, val, is_deleted);
+        node->right->parent = node;        
     } else if (node->left != nullptr && node->right != nullptr) {
         is_deleted = true;
         node->key = min_elem(node->right)->key;
         node->right = _remove(node->right, node->key, is_deleted);
+        node->right->parent = node;        
     } else {
         if (node->left != nullptr) {
             node = node->left;
