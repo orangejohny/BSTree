@@ -95,3 +95,8 @@ TEST_CASE("Testing input/output from file") {
 
     REQUIRE(result1 == result2);
 }
+
+TEST_CASE("Validation") {
+    BSTree::Tree<int> tree{5, 7, 9, 4, 2, 3, 4, 9};
+    REQUIRE(tree.validate() == true);
+}

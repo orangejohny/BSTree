@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <limits>
 
 namespace BSTree {
 template<typename type>
@@ -28,6 +29,7 @@ private:
         node = nullptr;
     };
     
+    auto check(Node<type>* node, type min, type max) -> bool;
     auto _insert(Node<type>* node, type val, bool&) -> void;
     auto direct_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
     auto symmetric_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
@@ -95,6 +97,8 @@ public:
         }
         return stream;
     }
+
+    auto validate() -> bool;
 
     ~Tree() {
         clean(root);
@@ -334,4 +338,18 @@ auto BSTree::Tree<type>::_exists(Node<type>* node, type val, bool& is_exist) con
         is_exist=true;
         return;
     }
+}
+
+// Is it binary searh tree?
+template<typename type>
+auto BSTree::Tree<type>::validate() -> bool {
+    return check(root, std::numeric_limits<type>::min(), std::numeric_limits<type>::max());
+}
+
+// Private utility function
+template<typename type>
+auto BSTree::Tree<type>::check(Node<type>* node, type min, type max) -> bool {
+    if (node == nullptr) return true;
+    if (node->key <= min || max <= node->key) return false; 
+    return check(node->left, min, node->key) && check(node->right, node->key, max);
 }
