@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
+#include <iterator>
 
 namespace BSTree {
 template<typename type>
@@ -99,10 +100,25 @@ public:
     }
 
     auto validate() -> bool;
+    auto begin() -> iterator {
+        return iterator(root);
+    }
+    auto end() -> iterator {
+        return iterator(min_elem(root));
+    }
 
     ~Tree() {
         clean(root);
     }
+};
+
+template<typename type>
+class it : public std::iterator<std::bidirectional_iterator_tag, type> {
+protected:
+    type ptr;
+public:
+    it(type p) : ptr{p} {};
+    it(const it<type>& other) : ptr{other.ptr} {};
 };
 }
 
