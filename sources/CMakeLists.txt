@@ -50,7 +50,7 @@ if(BUILD_TESTS)
     enable_testing()
     file(GLOB TEST_SOURCES ${TESTS_DIR}/*.cpp)
     add_executable(check ${TEST_SOURCES})
-    target_link_libraries(check TUI ${DEPENDS_LIBRARIES})
+    target_link_libraries(check TUI)
     add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
 endif()
 
