@@ -6,18 +6,10 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
-#include <iterator>
+#include <iterator.hpp>
+#include <node.hpp>
 
 namespace BSTree {
-template<typename type>
-struct Node {
-    type key;
-    Node<type> *left;
-    Node<type> *right;
-    Node<type>(type val) : key{val}, left{nullptr}, right{nullptr} {};
-    Node<type>(Node<type> *origin) : key{origin->key}, left{origin->left}, right{origin->right} {};
-};
-
 template<typename type>
 class Tree {
 private:
@@ -100,25 +92,16 @@ public:
     }
 
     auto validate() -> bool;
-    auto begin() -> iterator {
-        return iterator(root);
+    auto begin() -> bIt<type> {
+        return bIt<type>(root);
     }
-    auto end() -> iterator {
-        return iterator(min_elem(root));
+    auto end() -> bIt<type> {
+        return bIt<type>(min_elem(root));
     }
 
     ~Tree() {
         clean(root);
     }
-};
-
-template<typename type>
-class it : public std::iterator<std::bidirectional_iterator_tag, type> {
-protected:
-    type ptr;
-public:
-    it(type p) : ptr{p} {};
-    it(const it<type>& other) : ptr{other.ptr} {};
 };
 }
 
