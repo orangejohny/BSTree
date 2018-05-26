@@ -1,5 +1,8 @@
 // header file for BSTree class
 
+#ifndef __BSTREE_HPP__
+#define __BSTREE_HPP__
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -8,6 +11,7 @@
 #include <limits>
 #include <iterator.hpp>
 #include <node.hpp>
+
 
 namespace BSTree {
 template<typename type>
@@ -30,6 +34,7 @@ private:
     auto my_order(Node<type>* node, int lvl) const -> void;
     auto _remove(Node<type>* node, type val, bool&) -> Node<type>*;
     auto min_elem(Node<type>* node) const -> Node<type>*;
+    auto max_elem(Node<type>* node) const -> Node<type>*;
     auto swap(Tree<type>& t) -> void {
         std::swap(root, t.root);
     }
@@ -93,10 +98,16 @@ public:
 
     auto validate() -> bool;
     auto begin() -> bIt<type> {
-        return bIt<type>(root);
+        return bIt<type>(min_elem(root));
     }
     auto end() -> bIt<type> {
-        return bIt<type>(min_elem(root));
+        return bIt<type>(max_elem(root)->right);
+    }
+    auto rbegin() -> bIt<type> {
+        return bIt<type>(max_elem(root));
+    }
+    auto rend() -> bIt<type> {
+        return bIt<type>(min_elem(root)->left);
     }
 
     ~Tree() {
@@ -154,6 +165,7 @@ auto BSTree::Tree<type>::_insert(Node<type>* node, type val, bool& is_inserted) 
     if (val < node->key) {
         if (node->left == nullptr) {
             node->left = new Node<type>(val);
+            node->left->parent = node;
             is_inserted = true;
         } else {
             _insert(node->left, val, is_inserted);  
@@ -161,6 +173,7 @@ auto BSTree::Tree<type>::_insert(Node<type>* node, type val, bool& is_inserted) 
     } else if (val > node->key) {
         if (node->right == nullptr) {
             node->right = new Node<type>(val);
+            node->right->parent = node;
             is_inserted = true;
         } else {
             _insert(node->right, val, is_inserted);  
@@ -250,10 +263,13 @@ auto BSTree::Tree<type>::_remove(Node<type>* node, type val, bool& is_deleted) -
         is_deleted = true;
         node->key = min_elem(node->right)->key;
         node->right = _remove(node->right, node->key, is_deleted);
+        node->right->parent = node;
     } else {
         if (node->left != nullptr) {
+            node->left->parent = node->parent;
             node = node->left;
         } else {
+            node->right->parent = node->parent;
             node = node->right;
         }
         is_deleted = true;
@@ -269,6 +285,17 @@ auto BSTree::Tree<type>::min_elem(Node<type>* node) const -> Node<type>* {
     }
     return min_elem(node->left);
 }
+
+
+// Private function that searchs max element
+template<typename type>
+auto BSTree::Tree<type>::max_elem(Node<type>* node) const -> Node<type>* {
+    if (node->right == nullptr) {
+        return node;
+    }
+    return max_elem(node->right);
+}
+
 
 // Function that saves BSTree to the file
 template<typename type>
@@ -352,3 +379,5 @@ auto BSTree::Tree<type>::check(Node<type>* node, type min, type max) -> bool {
     if (node->key <= min || max <= node->key) return false; 
     return check(node->left, min, node->key) && check(node->right, node->key, max);
 }
+
+#endif
