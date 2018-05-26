@@ -31,7 +31,7 @@ private:
     auto direct_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
     auto symmetric_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
     auto reverse_order(Node<type>* node, std::ostream& out = std::cout) const -> void;
-    auto my_order(Node<type>* node, int lvl) const -> void;
+    auto my_order(Node<type>* node, int lvl, std::ostream& out = std::cout) const -> void;
     auto _remove(Node<type>* node, type val, bool&) -> Node<type>*;
     auto min_elem(Node<type>* node) const -> Node<type>*;
     auto max_elem(Node<type>* node) const -> Node<type>*;
@@ -58,7 +58,7 @@ public:
     auto remove(type val) -> bool;
     auto save(const std::string& path) const -> bool;
     auto load(const std::string& path) -> bool;
-    auto print_tree() const -> int;
+    auto print_tree(std::ostream& out = std::cout) const -> int;
     auto print_nodes(order ord, std::ostream& out = std::cout) const -> int {
         if (root == nullptr) {
             return -1;
@@ -183,30 +183,30 @@ auto BSTree::Tree<type>::_insert(Node<type>* node, type val, bool& is_inserted) 
 
 // Print nodes in visual form
 template<typename type>
-auto BSTree::Tree<type>::print_tree() const -> int {
+auto BSTree::Tree<type>::print_tree(std::ostream& out) const -> int {
     if (root == nullptr) {
         return -1;
     }
-    my_order(root, 0);
+    my_order(root, 0, out);
     return 0;
 }
 
 // Private utility function for printing nodes
 template<typename type>
-auto BSTree::Tree<type>::my_order(Node<type>* node, int lvl) const -> void {
+auto BSTree::Tree<type>::my_order(Node<type>* node, int lvl, std::ostream& out) const -> void {
     if (node != nullptr) {
         my_order(node->right, lvl+1);
         for (int i = 0; i < lvl; i++) {
             if (lvl != 1) {
-                std::cout << "     ";
+                out << "     ";
             } else {
-                std::cout << "    ";
+                out << "    ";
             }
         }
-        if (lvl != 0) std::cout << "--";
-        std::cout.width(4);                
-        std::cout << std::left << node->key << std::endl;
-        my_order(node->left, lvl+1);
+        if (lvl != 0) out << "--";
+        out.width(4);                
+        out << std::left << node->key << std::endl;
+        my_order(node->left, lvl+1, out);
     }
 }
 
@@ -311,7 +311,7 @@ auto BSTree::Tree<type>::save(const std::string& path) const -> bool {
     } else {
         std::string answer;
         std::cout << "Перезаписать файл? (Да|Нет)" << std::endl;
-        std::cin >> answer;
+        getline(std::cin, answer);
         if (answer == "Да" || answer == "ДА" || answer == "да") {
             std::ofstream fout(path);
             fout << *this;

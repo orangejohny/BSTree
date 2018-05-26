@@ -6,6 +6,7 @@ out*.txt
 .vscode
 test.cpp
 test
+debug/
 
 # Prerequisites
 *.d

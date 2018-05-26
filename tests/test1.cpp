@@ -1,13 +1,14 @@
 #include "catch.hpp"
-#include <TUI.hpp>
 #include <BSTree.hpp>
 #include <string>
 #include <iostream>
 #include <fstream>
 
-TEST_CASE("Creating binary search tree") {
+TEST_CASE("Creating binary search tree and output") {
     BSTree::Tree<int> tree1;
     REQUIRE(tree1.print_tree() == -1);
+    REQUIRE(tree1.print_nodes(BSTree::Tree<int>::order::direct) == -1);
+    REQUIRE(tree1.remove(1) == false);
 }
 
 TEST_CASE("Testing orders output") {
@@ -33,6 +34,8 @@ TEST_CASE("Testing orders output") {
     REQUIRE(result==symmetric);
     getline(out, result);
     REQUIRE(result==reverse);
+
+    REQUIRE(tree1.print_tree(out) == 0);
 }
 
 TEST_CASE("Testing insert") {
@@ -53,13 +56,17 @@ TEST_CASE("Testing insert") {
 
 TEST_CASE("Testing remove") {
     BSTree::Tree<int> tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    tree.remove(3);
     tree.remove(14);
     tree.remove(1);
+    tree.remove(6);
+    tree.remove(8);
+    tree.remove(10);
 
-    std::string expected = "8 3 6 4 7 10 13 ";
+    std::string expected = "4 7 13 ";
     std::string buffer;
     std::stringstream out(buffer);
-    REQUIRE(tree.print_nodes(BSTree::Tree<int>::order::direct, out) == 0);
+    REQUIRE(tree.print_nodes(BSTree::Tree<int>::order::symmetric, out) == 0);
     std::string result;
     getline(out, result);
     REQUIRE(result==expected);
@@ -72,20 +79,27 @@ TEST_CASE("Testing existing") {
 }
 
 TEST_CASE("Testing input/output from file") {
-    std::ofstream out("testInput.txt", std::ios::in);
-    out << "Да";
+    std::ofstream out("testInput.txt", std::ios::out);
+    out << "Да\nНет\n";
     out.close();
     freopen("testInput.txt", "r", stdin);
 
-    BSTree::Tree<int> tree1{8, 10, 14, 13, 3, 1, 6, 4, 7};
-    tree1.save("tree1.txt");
+    BSTree::Tree<int> tree1{8, 10, 1, 6, 4, 7};
+    BSTree::Tree<int> tree22{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    BSTree::Tree<int> tree3{8, 4, 13, 3, 1, 7};
+    
+    REQUIRE(tree1.save("tree1.txt") == true);
+    REQUIRE(tree22.save("tree1.txt") == true);
+    REQUIRE(tree3.save("tree1.txt") == false);
 
     BSTree::Tree<int> tree2;
     tree2.load("tree1.txt");
 
+    REQUIRE(tree2.load("aaaa.txt") == false);
+
     std::string buffer;
     std::stringstream str(buffer);
-    str << tree1;
+    str << tree22;
     str << std::endl;
     str << tree2;
 
