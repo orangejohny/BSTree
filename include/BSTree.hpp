@@ -263,13 +263,15 @@ auto BSTree::Tree<type>::_remove(Node<type>* node, type val, bool& is_deleted) -
         is_deleted = true;
         node->key = min_elem(node->right)->key;
         node->right = _remove(node->right, node->key, is_deleted);
-        node->right->parent = node;
+        if (node->right != nullptr) node->right->parent = node;
     } else {
         if (node->left != nullptr) {
             node->left->parent = node->parent;
             node = node->left;
-        } else {
+        } else if (node->right != nullptr) {
             node->right->parent = node->parent;
+            node = node->right;
+        } else {
             node = node->right;
         }
         is_deleted = true;
