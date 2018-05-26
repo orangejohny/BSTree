@@ -127,7 +127,6 @@ auto TUI::input(std::istream& inp) -> int {
     return c;
 }
 
-
 auto TUI::init_input(int& count, char** argv) -> std::vector<int> {
     if (count == 1) {
         count--;

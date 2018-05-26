@@ -15,7 +15,7 @@ TEST_CASE("MY_BENCH") {
 
     for (int expo = 1; expo <= 7; expo++) {
         out << "\n**10^**" << expo << std::endl << std::endl;
-        BSTree::Tree tree;
+        BSTree::Tree<int> tree;
         clock_t t;
         int value;
         for (int i = 0; i < pow(10, expo); i++) {
@@ -39,7 +39,7 @@ TEST_CASE("MY_BENCH") {
         out << "PRINT_TREE for 10^" << expo << " elements takes " << ((double)t)/CLOCKS_PER_SEC << " seconds" << std::endl;
 
         t = clock();
-        tree.print_nodes(BSTree::Tree::order::direct);
+        tree.print_nodes(BSTree::Tree<int>::order::direct);
         t = clock() - t;
         out << "PRINT_NODES for 10^" << expo << " elements takes " << ((double)t)/CLOCKS_PER_SEC << " seconds" << std::endl; 
 

@@ -3,6 +3,9 @@
 tree*.txt
 text.txt
 out*.txt
+.vscode
+test.cpp
+test
 
 # Prerequisites
 *.d

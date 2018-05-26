@@ -39,7 +39,7 @@ cmake --build build --target install
 
 **To run examples:**
 
-*Five examples are available!*
+*Six examples are available!*
 
 ```shell
 cd build/bin
