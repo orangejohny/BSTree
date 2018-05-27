@@ -195,7 +195,7 @@ auto BSTree::Tree<type>::print_tree(std::ostream& out) const -> int {
 template<typename type>
 auto BSTree::Tree<type>::my_order(Node<type>* node, int lvl, std::ostream& out) const -> void {
     if (node != nullptr) {
-        my_order(node->right, lvl+1);
+        my_order(node->right, lvl+1, out);
         for (int i = 0; i < lvl; i++) {
             if (lvl != 1) {
                 out << "     ";

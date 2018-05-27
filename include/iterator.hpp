@@ -1,6 +1,8 @@
 #include <node.hpp>
 #include <iterator>
 
+#ifndef __ITERATOR_HPP__
+#define __ITERATOR_HPP__
 
 namespace BSTree {
 template<typename type>
@@ -121,3 +123,5 @@ type* bIt<type>::operator->() const {
 }
 */
 }
+
+#endif

@@ -7,7 +7,7 @@
 **Copy-paste:**
 
 ```shell
-cmake -H./sources -Bbuild -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=install
+cmake -H./sources -Bbuild -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON -DBUILD_BENCHS=OFF -DCMAKE_INSTALL_PREFIX=install
 cmake --build build --target install
 cmake --build build --target test -- ARGS=--verbose
 ```
@@ -60,6 +60,16 @@ cmake --build build --target install
 ```shell
 cmake --build build --target test -- ARGS=--verbose
 ```
+
+**To generate coverage report:**
+
+*You need lcov installed!*
+
+```shell
+source coverage.sh
+```
+
+Open the report in /debug/report/index.html
 
 **Building of a project with benchmark:**
 

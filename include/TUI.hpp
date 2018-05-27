@@ -1,6 +1,8 @@
 // Header file for TUI class
 
-#pragma once
+#ifndef __TUI_HPP__
+#define __TUI_HPP__
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -24,3 +26,5 @@ auto str_input(std::istream&) -> std::string;
 auto is_exit() -> int;
 auto user_exit() -> void;
 };
+
+#endif

@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <iterator.hpp>
 
 TEST_CASE("Creating binary search tree and output") {
     BSTree::Tree<int> tree1;
@@ -36,6 +37,7 @@ TEST_CASE("Testing orders output") {
     REQUIRE(result==reverse);
 
     REQUIRE(tree1.print_tree(out) == 0);
+    
 }
 
 TEST_CASE("Testing insert") {
@@ -80,6 +82,9 @@ TEST_CASE("Testing existing") {
 
 TEST_CASE("Testing input/output from file") {
     std::ofstream out("testInput.txt", std::ios::out);
+    std::ifstream inp("tree1.txt");
+    if (inp.is_open()) out << "Да\n";
+    inp.close();
     out << "Да\nНет\n";
     out.close();
     freopen("testInput.txt", "r", stdin);
@@ -113,4 +118,50 @@ TEST_CASE("Testing input/output from file") {
 TEST_CASE("Validation") {
     BSTree::Tree<int> tree{5, 7, 9, 4, 2, 3, 4, 9};
     REQUIRE(tree.validate() == true);
+}
+
+TEST_CASE("Assigment of tree") {
+    BSTree::Tree<int> tree1 {1, 2, 3, 4};
+    BSTree::Tree<int> tree2 {1, 2, 3};
+    tree1 = tree2;
+
+    std::string buffer;
+    std::stringstream out(buffer);
+
+    out << tree1 << std::endl << tree2;
+
+    std::string t1, t2;
+    getline(out, t1);
+    getline(out, t2);
+
+    REQUIRE(t1 == t2);
+}
+
+TEST_CASE("Testing of iterator") {
+    BSTree::Tree<int> tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    std::string buffer;
+    std::stringstream out(buffer);
+    
+    tree.print_nodes(BSTree::Tree<int>::order::symmetric, out);
+    out << std::endl;
+
+    for (int c : tree) {
+        out << c << " ";
+    }
+    out << std::endl;
+
+    BSTree::bIt<int> it = tree.rbegin();
+    for (; it != tree.rend(); --it) {
+        out << *it << " ";
+    }
+    out << std::endl;
+    
+    std::string s1,s2,r1,r2;
+    getline(out, s1);
+    getline(out, s2);
+    getline(out, r1);
+    r2 = "14 13 10 8 7 6 4 3 1 ";       
+
+    REQUIRE(s1 == s2);
+    REQUIRE(r1 == r2);
 }
