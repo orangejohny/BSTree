@@ -66,7 +66,7 @@ cmake --build build --target test -- ARGS=--verbose
 *You need lcov installed!*
 
 ```shell
-source coverage.sh
+source ./tests/coverage.sh
 ```
 
 Open the report in /debug/report/index.html

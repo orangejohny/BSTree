@@ -165,3 +165,18 @@ TEST_CASE("Testing of iterator") {
     REQUIRE(s1 == s2);
     REQUIRE(r1 == r2);
 }
+
+TEST_CASE("Iterator swap") {
+    BSTree::Tree<int> tree{8, 10, 14, 13, 3, 1, 6, 4, 7};
+    BSTree::bIt<int> it = tree.begin();
+    ++it; ++it; ++it; ++it;
+    REQUIRE(*it == 7);
+
+    BSTree::bIt<int> rit = tree.rbegin();
+    REQUIRE(*rit == 14);
+
+    swap(it, rit);
+
+    REQUIRE(*it == 14);
+    REQUIRE(*rit == 7);    
+}

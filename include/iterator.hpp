@@ -21,8 +21,22 @@ public:
     bIt<type> operator++(int);
     bIt<type>& operator--();
     bIt<type> operator--(int);
-    bool operator==(const bIt<type>& other) const;
-    bool operator!=(const bIt<type>& other) const;
+
+    template<typename _type> friend
+    bool operator==(const bIt<_type>& lhs, const bIt<_type>& rhs) {
+        return lhs.ptr == rhs.ptr;
+    }
+
+    template<typename _type> friend
+    bool operator!=(const bIt<_type>& lhs, const bIt<_type>& rhs) {
+        return lhs.ptr != rhs.ptr;
+    }
+
+    template<typename _type> friend  
+    void swap(bIt<_type>& lhs, bIt<_type>& rhs) {
+        std::swap(lhs.ptr, rhs.ptr);
+    }
+
     type& operator*() const;
     //type* operator->() const;
 
@@ -102,16 +116,6 @@ bIt<type> bIt<type>::operator--(int) {
 }
 
 template<typename type>
-bool bIt<type>::operator==(const bIt<type>& other) const {
-    return ptr == other.ptr;
-}
-
-template<typename type>
-bool bIt<type>::operator!=(const bIt<type>& other) const {
-    return ptr != other.ptr;
-}
-
-template<typename type>
 type& bIt<type>::operator*() const {
     return ptr->key;
 }
@@ -119,7 +123,7 @@ type& bIt<type>::operator*() const {
 /*
 template<typename type>
 type* bIt<type>::operator->() const {
-    return &(ptr->key);
+    return (ptr->key);
 }
 */
 }
